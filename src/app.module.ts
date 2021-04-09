@@ -6,7 +6,8 @@ import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [TypeOrmModule.forRoot({
-    ...config
+    ...config,
+    keepConnectionAlive: true
   }), 
   UsersModule],
 })

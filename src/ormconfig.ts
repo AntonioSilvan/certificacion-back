@@ -10,7 +10,7 @@ const config : ConnectionOptions = {
     entities: [__dirname + "/**/*.entity{.ts,.js}"],
     synchronize: false,
     migrationsTableName: "migrations",
-    migrations: ["src/database/migrations/*.ts"],
+    migrations: [__dirname + "/database/migrations/*.ts"],
     cli: {
         migrationsDir: "src/database/migrations"
     }
