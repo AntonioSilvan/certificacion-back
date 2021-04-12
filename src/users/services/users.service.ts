@@ -18,4 +18,8 @@ export class UsersService {
     findOne(id: number) {
         return this.usersRepo.findOne(id);
     }
+
+    async create(createUserDto){
+        return await this.usersRepo.create(createUserDto);
+    }
 }

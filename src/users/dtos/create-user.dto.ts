@@ -8,9 +8,26 @@ export class CreateUserDto {
     lastName: string
 
     @IsEmail()
+    email: string
+
+    @IsString()
+    password: string
+}
+
+export class EditPostDto{
+    @IsString()
+    @IsOptional()
+    name: string
+
+    @IsString()
+    @IsOptional()
+    lastName: string
+
+    @IsEmail()
     @IsOptional()
     email: string
 
     @IsString()
+    @IsOptional()
     password: string
 }
