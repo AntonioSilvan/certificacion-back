@@ -8,18 +8,19 @@ import { Users } from '../users.entity';
 export class UsersService {
 
     constructor(
-        @InjectRepository(Users) private usersRepo: Repository<Users>
+        @InjectRepository(Users) private usersRepository: Repository<Users>
     ) {}
 
-    findAll() {
-        return this.usersRepo.find();
+    async findAll() {
+        return await this.usersRepository.find();
     }
 
     findOne(id: number) {
-        return this.usersRepo.findOne(id);
+        return this.usersRepository.findOne(id);
     }
 
     async create(createUserDto){
-        return await this.usersRepo.create(createUserDto);
+        const user = this.usersRepository.create(createUserDto);
+        return await this.usersRepository.save(user);
     }
 }
