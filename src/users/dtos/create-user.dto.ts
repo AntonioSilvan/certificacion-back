@@ -14,7 +14,7 @@ export class CreateUserDto {
     password: string
 }
 
-export class EditPostDto{
+export class UpdateUserDto{
     @IsString()
     @IsOptional()
     name: string

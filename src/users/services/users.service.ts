@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
@@ -12,15 +12,84 @@ export class UsersService {
     ) {}
 
     async findAll() {
-        return await this.usersRepository.find();
+        try{
+            const users = await this.usersRepository.find();
+
+            if(!users){
+                throw new NotFoundException();
+            }
+
+            return {
+                status: true,
+                message: 'Users',
+                data: users
+            }
+        }catch(error){
+            return { status: false, message: error.message }
+        }
     }
 
-    findOne(id: number) {
-        return this.usersRepository.findOne(id);
+    async findOne(id: number) {
+        try{
+            const user = await this.usersRepository.findOne(id);
+            
+            if(!user){
+                throw new NotFoundException()
+            }
+
+            return {
+                status: true,
+                message: 'User',
+                data: user
+            }
+        }catch(error){
+            return { status: false, message: error.message }
+        }
     }
 
     async create(createUserDto){
-        const user = this.usersRepository.create(createUserDto);
-        return await this.usersRepository.save(user);
+        try{
+            const user = this.usersRepository.create(createUserDto);
+            const execute = await this.usersRepository.save(user);
+
+            return {
+                status: true,
+                message: 'User saved',
+                data: execute
+            }
+        }catch(error){
+            return { status: false, message: error.message }
+        }
+    }
+
+    async update(id, updateUserDto){
+        try{
+            const user = await this.usersRepository.findOne(id);
+            const editedUser = Object.assign(user, updateUserDto);
+            const execute = await this.usersRepository.save(editedUser);
+
+            return {
+                status: true,
+                message: 'User edited successfully',
+                data: execute
+            }
+        }catch(error){
+            return { status: false, message: error.message }
+        }
+    }
+
+    async delete(id){
+        try{
+            const user = await this.usersRepository.findOne(id);
+            const userRemoved = await this.usersRepository.remove(user);
+
+            return {
+                status: true,
+                message: 'User removed successfully',
+                data: userRemoved
+            }
+        }catch(error){
+            return { status: false, message: error.message }
+        }
     }
 }
