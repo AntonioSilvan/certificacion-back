@@ -1,5 +1,6 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, OneToMany } from 'typeorm';
 import { Managers } from '../managers/managers.entity';
+import { Answers } from '../answers/answers.entity'
 
 @Entity()
 export class Questions {
@@ -17,4 +18,7 @@ export class Questions {
 
     @ManyToOne( () => Managers, manager => manager.question)
     manager: Managers
+
+    @OneToMany( () => Answers, answers => answers.question)
+    answers: Answers[]
 }
